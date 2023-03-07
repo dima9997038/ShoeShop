@@ -2,13 +2,13 @@ package com.example.shoeshop.controllers;
 
 import com.example.shoeshop.models.Product;
 import com.example.shoeshop.services.services.impl.ProductServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Slf4j
 public class ProductController {
     private final ProductServiceImpl productService;
     public ProductController(ProductServiceImpl productService) {
@@ -16,8 +16,8 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public String products(Model model) {
-        model.addAttribute("products",productService.listProducts());
+    public String products(@RequestParam(name = "category", required = false) String category, Model model) {
+        model.addAttribute("products",productService.listProducts(category));
         return "products";
     }
 
@@ -36,5 +36,10 @@ public class ProductController {
     public String deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
         return "redirect:/";
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handle(IllegalArgumentException e){
+        log.error(e.getMessage());
+        return e.getMessage();
     }
 }

@@ -9,7 +9,7 @@
 <b>Категория  </b>${product.category}<br>
 <b>Описание  </b>${product.description}<br>
 <b>Производитель  </b>${product.manufacturer}<br>
-<b>Цена  </b>${product.price}<br>
+<b>Цена  </b>${product.price}&nbsp; руб.<br>
 <b>Размер  </b>${product.size}<br>
 <hr>
 <h3>Удалить товар</h3>
